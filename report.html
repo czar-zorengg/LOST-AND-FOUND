@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Report Item | BSHS Lost and Found Hub</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7fb;
+}
+
+header{
+background:#1e3a8a;
+color:white;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+}
+
+section{
+padding:60px 8%;
+}
+
+.title{
+text-align:center;
+margin-bottom:40px;
+}
+
+.title h1{
+color:#1e3a8a;
+font-size:35px;
+margin-bottom:10px;
+}
+
+.title p{
+color:#555;
+}
+
+form{
+max-width:750px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.group{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#1e3a8a;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#172554;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+BSHS LOST AND FOUND HUB
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="items.html">Items</a>
+<a href="report.html">Report</a>
+
+</nav>
+
+</header>
+
+<section>
+
+<div class="title">
+
+<h1>Report Lost or Found Item</h1>
+
+<p>Submit details about a lost or found item.</p>
+
+</div>
+
+<form id="reportForm">
+
+<div class="group">
+
+<label for="reportType">Report Type</label>
+
+<select id="reportType" required>
+
+<option value="">Select Type</option>
+
+<option>Lost Item</option>
+
+<option>Found Item</option>
+
+</select>
+
+</div>
+
+<div class="group">
+
+<label for="itemName">Item Name</label>
+
+<input
+type="text"
+id="itemName"
+placeholder="Example: Wallet, ID, Phone"
+required>
+
+</div>
+
+<div class="group">
+
+<label for="category">Category</label>
+
+<select id="category" required>
+
+<option value="">Select Category</option>
+
+<option>Electronics</option>
+
+<option>School Supplies</option>
+
+<option>Documents and IDs</option>
+
+<option>Bags</option>
+
+<option>Others</option>
+
+</select>
+
+</div>
+
+<div class="group">
+
+<label for="location">Location</label>
+
+<input
+type="text"
+id="location"
+placeholder="Where was it lost/found?"
+required>
+
+</div>
+
+<div class="group">
+
+<label for="date">Date</label>
+
+<input
+type="date"
+id="date"
+required>
+
+</div>
+
+<div class="group">
+
+<label for="description">Description</label>
+
+<textarea
+id="description"
+placeholder="Describe the item"
+required></textarea>
+
+</div>
+
+<div class="group">
+
+<label for="contact">Contact Information</label>
+
+<input
+type="text"
+id="contact"
+placeholder="Email or Student ID"
+required>
+
+</div>
+
+<div class="group">
+
+<label for="photo">Upload Photo</label>
+
+<input
+type="file"
+id="photo"
+accept="image/*">
+
+</div>
+
+<button type="submit">
+Submit Report
+</button>
+
+</form>
+<script>
+
+
+const reportForm = document.getElementById("reportForm");
+
+const reportType = document.getElementById("reportType");
+const itemName = document.getElementById("itemName");
+const category = document.getElementById("category");
+const locationInput = document.getElementById("location");
+const dateInput = document.getElementById("date");
+const description = document.getElementById("description");
+const contact = document.getElementById("contact");
+const photo = document.getElementById("photo");
+
+
+reportForm.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+
+    let file = photo.files[0];
+
+
+    if(file){
+
+        let reader = new FileReader();
+
+
+        reader.onload = function(event){
+
+            saveReport(event.target.result);
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+
+    }else{
+
+        saveReport("");
+
+    }
+
+
+});
+
+
+function saveReport(image){
+
+
+    let reports =
+    JSON.parse(localStorage.getItem("reports")) || [];
+
+
+  reports.push({
+
+    type: reportType.value,
+
+    item: itemName.value,
+
+    category: category.value,
+
+    location: locationInput.value,
+
+    date: dateInput.value,
+
+    description: description.value,
+
+    contact: contact.value,
+
+    photo: image,
+
+    status: "Pending"
+
+});
+
+
+    try{
+
+        localStorage.setItem(
+            "reports",
+            JSON.stringify(reports)
+        );
+
+
+        alert("Report Submitted Successfully!");
+
+
+        reportForm.reset();
+
+
+    }catch(error){
+
+        alert("Hindi na-save. Masyadong malaki ang picture.");
+
+    }
+
+
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Claim Item | BSHS Lost and Found Hub</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7fb;
+}
+
+header{
+background:#1e3a8a;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+form{
+max-width:700px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.group{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+font-weight:bold;
+}
+
+input,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+textarea{
+height:120px;
+resize:vertical;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#1e3a8a;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#172554;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Claim Item</h1>
+
+</header>
+
+<form id="claimForm">
+
+<div class="group">
+
+<label for="studentEmail">Student Gmail</label>
+
+<input
+type="email"
+id="studentEmail"
+placeholder="Enter your Gmail"
+required>
+
+</div>
+
+<div class="group">
+
+<label for="itemName">Item Name</label>
+
+<input
+type="text"
+id="itemName"
+placeholder="Item Name"
+readonly>
+
+</div>
+
+<div class="group">
+
+<label for="description">Description of the Item</label>
+
+<textarea
+id="description"
+placeholder="Describe the item in detail. Include its color, brand, size, unique markings, or any information that can help verify ownership."
+required></textarea>
+
+</div>
+
+<div class="group">
+
+<label for="proof">Proof of Ownership (Optional)</label>
+
+<input
+type="file"
+id="proof"
+accept="image/*">
+
+</div>
+
+<button type="submit">
+
+Submit Claim
+
+</button>
+
+</form>
+<script>
+
+const claimForm = document.getElementById("claimForm");
+const studentEmail = document.getElementById("studentEmail");
+const itemName = document.getElementById("itemName");
+const description = document.getElementById("description");
+const proof = document.getElementById("proof");
+
+// Load student email
+studentEmail.value = localStorage.getItem("studentGmail") || "";
+
+// Load selected item
+let reports = JSON.parse(localStorage.getItem("reports")) || [];
+let claimIndex = localStorage.getItem("claimIndex");
+
+if(claimIndex !== null && reports[claimIndex]){
+    itemName.value = reports[claimIndex].item;
+}
+
+claimForm.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    let claims = JSON.parse(localStorage.getItem("claims")) || [];
+
+    function saveClaim(image){
+
+        let claim = {
+
+            gmail: studentEmail.value,
+            item: itemName.value,
+            description: description.value,
+            proof: image,
+            status: "Pending"
+
+        };
+
+        claims.push(claim);
+
+        try{
+
+            localStorage.setItem("claims", JSON.stringify(claims));
+
+            alert("Claim Submitted Successfully!");
+
+            localStorage.removeItem("claimIndex");
+
+            window.location.href="items.html";
+
+        }catch(err){
+
+            alert("Storage is full.\n\nPlease use a smaller image.");
+
+        }
+
+    }
+
+    let file = proof.files[0];
+
+    if(file){
+
+        let reader = new FileReader();
+
+        reader.onload = function(e){
+
+            let img = new Image();
+
+            img.onload = function(){
+
+                let canvas = document.createElement("canvas");
+
+                let ctx = canvas.getContext("2d");
+
+                let maxWidth = 500;
+
+                let scale = maxWidth / img.width;
+
+                if(scale > 1){
+                    scale = 1;
+                }
+
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+
+                ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+                let compressed = canvas.toDataURL("image/jpeg",0.5);
+
+                saveClaim(compressed);
+
+            };
+
+            img.src = e.target.result;
+
+        };
+
+        reader.readAsDataURL(file);
+
+    }else{
+
+        saveClaim("");
+
+    }
+
+});
+
+</script>
+</body>
+</html>

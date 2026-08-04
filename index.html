@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSHS LOST AND FOUND HUB - Student Lost and Found Tracking System</title>
+
+  <style>
+     *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      padding: 90px 8%;
+      background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 750px;
+      margin: 0 auto 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #facc15;
+      color: #1f2937;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .btn.secondary {
+      background: white;
+      color: #1e3a8a;
+    }
+
+    section {
+      padding: 70px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 34px;
+      color: #1e3a8a;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #6b7280;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .card h3 {
+      color: #1e3a8a;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #4b5563;
+    }
+
+    .how-it-works {
+      background: #ffffff;
+    }
+
+    .step-number {
+      width: 45px;
+      height: 45px;
+      background: #1e3a8a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .items {
+      background: #eef2ff;
+    }
+
+    .item-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .item-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .item-content {
+      padding: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .lost {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .found {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .form-section {
+      background: white;
+    }
+
+    form {
+      max-width: 750px;
+      margin: auto;
+      background: #f9fafb;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    button {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 13px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #172554;
+    }
+
+    .about {
+      background: #1e3a8a;
+      color: white;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 850px;
+      margin: auto;
+      font-size: 17px;
+    }
+
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 8px;
+        font-size: 14px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero {
+        padding: 70px 6%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">BSHS LOST AND FOUND HUB</div>
+<nav id="navMenu">
+
+<a href="index.html">Home</a>
+<a href="items.html">Items</a>
+<a href="#" onclick="goToReport()">Report an Item</a>
+
+</nav>
+
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Website-Based Lost and Found Tracking System for Students</h1>
+    <p>
+      BSHS LOST AND FOUND HUB helps students report, search, track, and recover lost belongings through a secure and easy-to-use online platform designed for schools and universities.
+    </p>
+  
+<a href="report.html?page=claim" class="btn">Report Item</a>
+
+<a href="students-login.html?page=claim" class="btn">Claim Item</a>
+  </section>
+
+  <section id="features">
+    <div class="section-title">
+      <h2>System Features</h2>
+      <p>
+        A student-friendly platform that improves the traditional lost and found process by making item reporting and tracking faster, organized, and accessible online.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Lost Item Reporting</h3>
+        <p>
+          Students can submit details of lost belongings including item name, category, date, location, description, and photo.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Found Item Registration</h3>
+        <p>
+          Students or staff can register found items so that owners can easily search and claim them.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Search and Filtering</h3>
+        <p>
+          Users can search for items by category, location, date, status, or keyword to quickly find matching reports.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Claim Request</h3>
+        <p>
+          Owners can send a claim request and provide proof of ownership before the item is returned.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Admin Verification</h3>
+        <p>
+          Administrators can verify reports, approve claims, manage users, and prevent false or duplicate submissions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Status Tracking</h3>
+        <p>
+          Each report has a status such as pending, matched, claimed, or returned, making the recovery process transparent.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <div class="section-title">
+      <h2>How It Works</h2>
+      <p>
+        BSHS LOST AND FOUND HUB follows a simple process to connect students who lost items with students or staff who found them.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="step-number">1</div>
+        <h3>Report</h3>
+        <p>
+          A student submits a lost or found item report using the online form.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="step-number">2</div>
+        <h3>Match</h3>
+        <p>
+          The system compares item details such as category, location, date, color, and description.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="step-number">3</div>
+        <h3>Verify</h3>
+        <p>
+          The administrator checks the claim and confirms the rightful owner.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="step-number">4</div>
+        <h3>Return</h3>
+        <p>
+          Once approved, the item is safely returned to the student.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>About BSHS LOST AND FOUND HUB</h2>
+    <br />
+    <p>
+      BSHS LOST AND FIND HUB is a website-based Lost and Found Tracking System created for students, teachers, and school administrators.
+      Its main goal is to replace manual lost and found records with a digital platform that allows fast reporting,
+      easy searching, claim verification, and secure item return. The system supports better organization, transparency,
+      and convenience within the school community.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 BSHS LOST AND FIND HUB. Website-Based Lost and Found Tracking System for Students.</p>
+  </footer>
+  <script>
+
+let email = localStorage.getItem("studentGmail");
+
+if(email){
+
+document.getElementById("navMenu").innerHTML=`
+
+<a href="index.html">Home</a>
+
+<a href="items.html">Items</a>
+
+<a href="#" onclick="goToReport()">Report</a>
+
+<a href="my-reports.html">My Reports</a>
+
+<a href="#" onclick="logout()">Logout</a>
+
+`;
+
+}
+
+function logout(){
+
+localStorage.removeItem("studentGmail");
+
+window.location.href="index.html";
+
+}
+
+</script>
+<script>
+
+function goToReport(){
+
+localStorage.removeItem("claimItem");
+
+localStorage.setItem("loginPurpose","report");
+
+window.location.href="students-login.html";
+
+}
+
+</script>
+<script>
+function goToReport(){
+    localStorage.setItem("afterLogin","report");
+    window.location.href = "students-login.html";
+}
+</script>
+</body>
+</html>
+``  

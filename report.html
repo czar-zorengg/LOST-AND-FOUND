@@ -433,14 +433,13 @@ function saveReport(image, studentGmail){
         );
 
 
-        alert(
-            "Report Submitted Successfully!"
-        );
+       alert(
+    "Report Submitted Successfully!"
+);
 
+reportForm.reset();
 
-        // RESET FORM LANG
-        reportForm.reset();
-
+window.location.href = "my-reports.html";
 
     }catch(error){
 

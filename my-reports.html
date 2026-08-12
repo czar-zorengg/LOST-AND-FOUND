@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Reports</title>
+<title>My Reports | BSHS Lost and Found Hub</title>
 
 <style>
 
@@ -41,6 +41,10 @@ nav a{
     margin-left:20px;
 }
 
+nav a:hover{
+    text-decoration:underline;
+}
+
 section{
     padding:40px 8%;
 }
@@ -50,9 +54,9 @@ h1{
     margin-bottom:10px;
 }
 
-#email{
+.subtitle{
     color:#555;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 table{
@@ -105,7 +109,9 @@ td{
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -119,21 +125,14 @@ BSHS LOST AND FOUND HUB
 Home
 </a>
 
-<a href="report.html">
-Report
-</a>
-
 <a href="items.html">
 Items
-</a>
-
-<a href="myreports.html">
-My Reports
 </a>
 
 </nav>
 
 </header>
+
 
 <section>
 
@@ -141,7 +140,10 @@ My Reports
 My Reports
 </h1>
 
-<p id="email"></p>
+<p class="subtitle">
+Here are the reports submitted through this browser.
+</p>
+
 
 <table>
 
@@ -166,12 +168,17 @@ Location
 </th>
 
 <th>
+Date
+</th>
+
+<th>
 Status
 </th>
 
 </tr>
 
 </thead>
+
 
 <tbody id="myTable">
 
@@ -181,194 +188,133 @@ Status
 
 </section>
 
+
 <script>
 
 
-// GET CURRENT STUDENT
-const gmail =
-    localStorage.getItem(
-        "studentGmail"
-    );
+// GET ALL REPORTS
+let reports =
+    JSON.parse(
+        localStorage.getItem("reports")
+    ) || [];
 
 
-const emailDisplay =
-    document.getElementById(
-        "email"
-    );
-
-
-const table =
+let table =
     document.getElementById(
         "myTable"
     );
 
 
-// CHECK LOGIN
-if(!gmail){
-
-    emailDisplay.innerHTML =
-        "No student account found.";
+// CHECK IF THERE ARE REPORTS
+if(reports.length === 0){
 
     table.innerHTML = `
+
         <tr>
 
             <td
-                colspan="5"
+                colspan="6"
                 class="no-report"
             >
 
-                Please login first
-                to view your reports.
+                No reports submitted yet.
 
             </td>
 
         </tr>
+
     `;
 
-}else{
+}
 
 
-    emailDisplay.innerHTML =
-        "Logged in as: <strong>" +
-        gmail +
-        "</strong>";
+// DISPLAY ALL REPORTS
+else{
+
+    reports.forEach(
+        function(report){
+
+            let status =
+                report.status ||
+                "Pending";
 
 
-    // GET ALL REPORTS
-    let reports =
-        JSON.parse(
-            localStorage.getItem(
-                "reports"
-            )
-        ) || [];
+            let color =
+                "pending";
 
 
-    // GET ONLY THIS STUDENT'S REPORTS
-    const myReports =
-        reports.filter(
-            function(report){
+            if(
+                status.toLowerCase() ===
+                "approved"
+            ){
 
-                return (
-                    report.student &&
-                    report.student
-                        .toLowerCase()
-                        .trim() ===
-                    gmail
-                        .toLowerCase()
-                        .trim()
-                );
+                color =
+                    "approved";
 
             }
-        );
 
+            else if(
+                status.toLowerCase() ===
+                "rejected"
+            ){
 
-    // NO REPORT
-    if(
-        myReports.length === 0
-    ){
-
-        table.innerHTML = `
-            <tr>
-
-                <td
-                    colspan="5"
-                    class="no-report"
-                >
-
-                    You have no reports yet.
-
-                </td>
-
-            </tr>
-        `;
-
-    }
-
-
-    // HAS REPORTS
-    else{
-
-        myReports.forEach(
-            function(report){
-
-                let status =
-                    report.status ||
-                    "Pending";
-
-
-                let color =
-                    "pending";
-
-
-                if(
-                    status.toLowerCase() ===
-                    "approved"
-                ){
-
-                    color =
-                        "approved";
-
-                }
-
-                else if(
-                    status.toLowerCase() ===
-                    "rejected"
-                ){
-
-                    color =
-                        "rejected";
-
-                }
-
-                else if(
-                    status.toLowerCase() ===
-                    "claimed"
-                ){
-
-                    color =
-                        "claimed";
-
-                }
-
-
-                table.innerHTML += `
-
-                    <tr>
-
-                        <td>
-                            ${report.item || "-"}
-                        </td>
-
-                        <td>
-                            ${report.type || "-"}
-                        </td>
-
-                        <td>
-                            ${report.category || "-"}
-                        </td>
-
-                        <td>
-                            ${report.location || "-"}
-                        </td>
-
-                        <td
-                            class="${color}"
-                        >
-                            ${status}
-                        </td>
-
-                    </tr>
-
-                `;
+                color =
+                    "rejected";
 
             }
-        );
 
-    }
+            else if(
+                status.toLowerCase() ===
+                "claimed"
+            ){
+
+                color =
+                    "claimed";
+
+            }
+
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${report.item || "-"}
+                    </td>
+
+                    <td>
+                        ${report.type || "-"}
+                    </td>
+
+                    <td>
+                        ${report.category || "-"}
+                    </td>
+
+                    <td>
+                        ${report.location || "-"}
+                    </td>
+
+                    <td>
+                        ${report.date || "-"}
+                    </td>
+
+                    <td
+                        class="${color}"
+                    >
+                        ${status}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
 
 }
 
 </script>
+
 
 </body>
 

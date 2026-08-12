@@ -1,90 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>My Reports</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f7fb;
+    background:#f4f7fb;
 }
 
 header{
-background:#1e3a8a;
-color:white;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
+    background:#1e3a8a;
+    color:white;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .logo{
-font-size:24px;
-font-weight:bold;
+    font-size:24px;
+    font-weight:bold;
 }
 
 nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
 }
 
 section{
-padding:40px 8%;
+    padding:40px 8%;
 }
 
 h1{
-color:#1e3a8a;
-margin-bottom:10px;
+    color:#1e3a8a;
+    margin-bottom:10px;
+}
+
+#email{
+    color:#555;
+    margin-bottom:20px;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-background:white;
-margin-top:25px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    margin-top:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
 th{
-background:#1e3a8a;
-color:white;
-padding:15px;
+    background:#1e3a8a;
+    color:white;
+    padding:15px;
 }
 
 td{
-padding:15px;
-text-align:center;
-border-bottom:1px solid #ddd;
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
 }
 
 .pending{
-color:orange;
-font-weight:bold;
+    color:orange;
+    font-weight:bold;
 }
 
 .approved{
-color:green;
-font-weight:bold;
+    color:green;
+    font-weight:bold;
 }
 
 .rejected{
-color:red;
-font-weight:bold;
+    color:red;
+    font-weight:bold;
 }
 
 .claimed{
-color:blue;
-font-weight:bold;
+    color:blue;
+    font-weight:bold;
+}
+
+.no-report{
+    text-align:center;
+    padding:30px;
+    color:#777;
 }
 
 </style>
@@ -101,11 +115,21 @@ BSHS LOST AND FOUND HUB
 
 <nav>
 
-<a href="index.html">Home</a>
+<a href="index.html">
+Home
+</a>
 
-<a href="report.html">Report</a>
+<a href="report.html">
+Report
+</a>
 
-<a href="items.html">Items</a>
+<a href="items.html">
+Items
+</a>
+
+<a href="myreports.html">
+My Reports
+</a>
 
 </nav>
 
@@ -113,7 +137,9 @@ BSHS LOST AND FOUND HUB
 
 <section>
 
-<h1>My Reports</h1>
+<h1>
+My Reports
+</h1>
 
 <p id="email"></p>
 
@@ -123,15 +149,25 @@ BSHS LOST AND FOUND HUB
 
 <tr>
 
-<th>Item</th>
+<th>
+Item
+</th>
 
-<th>Type</th>
+<th>
+Type
+</th>
 
-<th>Category</th>
+<th>
+Category
+</th>
 
-<th>Location</th>
+<th>
+Location
+</th>
 
-<th>Status</th>
+<th>
+Status
+</th>
 
 </tr>
 
@@ -147,50 +183,193 @@ BSHS LOST AND FOUND HUB
 
 <script>
 
-let gmail = localStorage.getItem("studentGmail");
 
-document.getElementById("email").innerHTML =
-"Logged in as: " + gmail;
+// GET CURRENT STUDENT
+const gmail =
+    localStorage.getItem(
+        "studentGmail"
+    );
 
-let reports = JSON.parse(localStorage.getItem("reports")) || [];
 
-let table = document.getElementById("myTable");
+const emailDisplay =
+    document.getElementById(
+        "email"
+    );
 
-reports.forEach(function(report){
 
-if(report.student===gmail){
+const table =
+    document.getElementById(
+        "myTable"
+    );
 
-let color="pending";
 
-if(report.status==="Approved") color="approved";
+// CHECK LOGIN
+if(!gmail){
 
-if(report.status==="Rejected") color="rejected";
+    emailDisplay.innerHTML =
+        "No student account found.";
 
-if(report.status==="Claimed") color="claimed";
+    table.innerHTML = `
+        <tr>
 
-table.innerHTML += `
+            <td
+                colspan="5"
+                class="no-report"
+            >
 
-<tr>
+                Please login first
+                to view your reports.
 
-<td>${report.item}</td>
+            </td>
 
-<td>${report.type}</td>
+        </tr>
+    `;
 
-<td>${report.category}</td>
+}else{
 
-<td>${report.location}</td>
 
-<td class="${color}">${report.status}</td>
+    emailDisplay.innerHTML =
+        "Logged in as: <strong>" +
+        gmail +
+        "</strong>";
 
-</tr>
 
-`;
+    // GET ALL REPORTS
+    let reports =
+        JSON.parse(
+            localStorage.getItem(
+                "reports"
+            )
+        ) || [];
+
+
+    // GET ONLY THIS STUDENT'S REPORTS
+    const myReports =
+        reports.filter(
+            function(report){
+
+                return (
+                    report.student &&
+                    report.student
+                        .toLowerCase()
+                        .trim() ===
+                    gmail
+                        .toLowerCase()
+                        .trim()
+                );
+
+            }
+        );
+
+
+    // NO REPORT
+    if(
+        myReports.length === 0
+    ){
+
+        table.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="no-report"
+                >
+
+                    You have no reports yet.
+
+                </td>
+
+            </tr>
+        `;
+
+    }
+
+
+    // HAS REPORTS
+    else{
+
+        myReports.forEach(
+            function(report){
+
+                let status =
+                    report.status ||
+                    "Pending";
+
+
+                let color =
+                    "pending";
+
+
+                if(
+                    status.toLowerCase() ===
+                    "approved"
+                ){
+
+                    color =
+                        "approved";
+
+                }
+
+                else if(
+                    status.toLowerCase() ===
+                    "rejected"
+                ){
+
+                    color =
+                        "rejected";
+
+                }
+
+                else if(
+                    status.toLowerCase() ===
+                    "claimed"
+                ){
+
+                    color =
+                        "claimed";
+
+                }
+
+
+                table.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            ${report.item || "-"}
+                        </td>
+
+                        <td>
+                            ${report.type || "-"}
+                        </td>
+
+                        <td>
+                            ${report.category || "-"}
+                        </td>
+
+                        <td>
+                            ${report.location || "-"}
+                        </td>
+
+                        <td
+                            class="${color}"
+                        >
+                            ${status}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+    }
 
 }
-
-});
 
 </script>
 
 </body>
+
 </html>

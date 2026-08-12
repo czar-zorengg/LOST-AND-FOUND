@@ -19,7 +19,11 @@
 
 body{
     background:#f4f7fb;
+    color:#1f2937;
 }
+
+
+/* HEADER */
 
 header{
     background:#1e3a8a;
@@ -38,12 +42,16 @@ header{
 nav a{
     color:white;
     text-decoration:none;
-    margin-left:20px;
+    margin-left:25px;
+    font-weight:500;
 }
 
 nav a:hover{
     text-decoration:underline;
 }
+
+
+/* SECTION */
 
 section{
     padding:40px 8%;
@@ -56,14 +64,17 @@ h1{
 
 .subtitle{
     color:#555;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
+
+
+/* TABLE */
 
 table{
     width:100%;
     border-collapse:collapse;
     background:white;
-    margin-top:25px;
+    margin-top:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
@@ -78,6 +89,9 @@ td{
     text-align:center;
     border-bottom:1px solid #ddd;
 }
+
+
+/* STATUS */
 
 .pending{
     color:orange;
@@ -99,10 +113,42 @@ td{
     font-weight:bold;
 }
 
+
+/* NO REPORT */
+
 .no-report{
     text-align:center;
     padding:30px;
     color:#777;
+}
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav a{
+        margin:0 8px;
+    }
+
+    section{
+        padding:30px 4%;
+    }
+
+    table{
+        font-size:13px;
+    }
+
+    th,
+    td{
+        padding:10px 5px;
+    }
+
 }
 
 </style>
@@ -113,11 +159,14 @@ td{
 <body>
 
 
+<!-- HEADER -->
+
 <header>
 
 <div class="logo">
 BSHS LOST AND FOUND HUB
 </div>
+
 
 <nav>
 
@@ -134,6 +183,8 @@ Items
 </header>
 
 
+<!-- MY REPORTS -->
+
 <section>
 
 <h1>
@@ -141,7 +192,7 @@ My Reports
 </h1>
 
 <p class="subtitle">
-Here are the reports you have submitted.
+Here are the reports submitted through this browser.
 </p>
 
 
@@ -151,17 +202,25 @@ Here are the reports you have submitted.
 
 <tr>
 
-<th>Item</th>
+<th>
+Item
+</th>
 
-<th>Type</th>
+<th>
+Type
+</th>
 
-<th>Category</th>
+<th>
+Category
+</th>
 
-<th>Location</th>
+<th>
+Location
+</th>
 
-<th>Date</th>
-
-<th>Status</th>
+<th>
+Status
+</th>
 
 </tr>
 
@@ -169,6 +228,7 @@ Here are the reports you have submitted.
 
 
 <tbody id="myTable">
+
 </tbody>
 
 </table>
@@ -179,7 +239,13 @@ Here are the reports you have submitted.
 <script>
 
 
-// GET ALL SAVED REPORTS
+/*
+    GET REPORTS FROM LOCAL STORAGE
+
+    IMPORTANT:
+    Walang login requirement dito.
+*/
+
 let reports =
     JSON.parse(
         localStorage.getItem("reports")
@@ -190,15 +256,20 @@ let table =
     document.getElementById("myTable");
 
 
-// NO REPORTS
+/*
+    IF THERE ARE NO REPORTS
+*/
+
 if(reports.length === 0){
 
     table.innerHTML = `
 
         <tr>
 
-            <td colspan="6"
-                class="no-report">
+            <td
+                colspan="5"
+                class="no-report"
+            >
 
                 No reports submitted yet.
 
@@ -211,7 +282,10 @@ if(reports.length === 0){
 }
 
 
-// SHOW REPORTS
+/*
+    DISPLAY ALL REPORTS
+*/
+
 else{
 
     reports.forEach(function(report){
@@ -220,25 +294,39 @@ else{
             report.status || "Pending";
 
 
-        let color =
+        let statusClass =
             "pending";
 
 
-        if(status === "Approved"){
+        if(
+            status.toLowerCase() ===
+            "approved"
+        ){
 
-            color = "approved";
-
-        }
-
-        else if(status === "Rejected"){
-
-            color = "rejected";
+            statusClass =
+                "approved";
 
         }
 
-        else if(status === "Claimed"){
 
-            color = "claimed";
+        else if(
+            status.toLowerCase() ===
+            "rejected"
+        ){
+
+            statusClass =
+                "rejected";
+
+        }
+
+
+        else if(
+            status.toLowerCase() ===
+            "claimed"
+        ){
+
+            statusClass =
+                "claimed";
 
         }
 
@@ -263,11 +351,7 @@ else{
                     ${report.location || "-"}
                 </td>
 
-                <td>
-                    ${report.date || "-"}
-                </td>
-
-                <td class="${color}">
+                <td class="${statusClass}">
                     ${status}
                 </td>
 

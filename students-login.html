@@ -11,97 +11,97 @@
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f7fb;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
+    background:#f4f7fb;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .container{
-background:white;
-width:380px;
-padding:35px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+    background:white;
+    width:380px;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
 h1{
-text-align:center;
-color:#1e3a8a;
-margin-bottom:25px;
+    text-align:center;
+    color:#1e3a8a;
+    margin-bottom:25px;
 }
 
 label{
-display:block;
-font-weight:bold;
-margin-bottom:8px;
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
 input[type="email"],
 input[type="password"]{
-width:100%;
-padding:12px;
-margin-bottom:18px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:15px;
+    width:100%;
+    padding:12px;
+    margin-bottom:18px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
 }
 
 .show-password{
-display:flex;
-align-items:center;
-margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
 }
 
 .show-password input{
-width:auto;
-margin:0;
-margin-right:8px;
+    width:auto;
+    margin:0;
+    margin-right:8px;
 }
 
 .show-password label{
-margin:0;
-font-weight:normal;
+    margin:0;
+    font-weight:normal;
 }
 
 button{
-width:100%;
-padding:13px;
-background:#1e3a8a;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
+    width:100%;
+    padding:13px;
+    background:#1e3a8a;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
 }
 
 button:hover{
-background:#172554;
+    background:#172554;
 }
 
 .error{
-color:red;
-text-align:center;
-margin-top:15px;
+    color:red;
+    text-align:center;
+    margin-top:15px;
 }
 
 .back{
-text-align:center;
-margin-top:20px;
+    text-align:center;
+    margin-top:20px;
 }
 
 .back a{
-text-decoration:none;
-color:#1e3a8a;
-font-weight:bold;
+    text-decoration:none;
+    color:#1e3a8a;
+    font-weight:bold;
 }
 
 </style>
@@ -114,19 +114,25 @@ font-weight:bold;
 
 <h1>Student Login</h1>
 
-<label>Gmail Address</label>
+<label for="gmail">
+Gmail Address
+</label>
 
 <input
 type="email"
 id="gmail"
-placeholder="example@gmail.com">
+placeholder="example@gmail.com"
+required>
 
-<label>Password</label>
+<label for="password">
+Password
+</label>
 
 <input
 type="password"
 id="password"
-placeholder="Password">
+placeholder="Password"
+required>
 
 <div class="show-password">
 
@@ -161,7 +167,8 @@ LOGIN
 
 function togglePassword(){
 
-    let password = document.getElementById("password");
+    let password =
+        document.getElementById("password");
 
     if(password.type === "password"){
 
@@ -178,32 +185,55 @@ function togglePassword(){
 
 function login(){
 
-    let gmail = document.getElementById("gmail").value.trim();
-    let password = document.getElementById("password").value.trim();
+    let gmail =
+        document.getElementById("gmail")
+        .value
+        .trim()
+        .toLowerCase();
+
+    let password =
+        document.getElementById("password")
+        .value
+        .trim();
+
 
     if(gmail === "" || password === ""){
 
         document.getElementById("error").innerHTML =
-        "Please fill up all fields.";
+            "Please fill up all fields.";
 
         return;
+
     }
 
-    localStorage.setItem("studentGmail", gmail);
+
+    // SAVE STUDENT GMAIL
+    localStorage.setItem(
+        "studentGmail",
+        gmail
+    );
+
 
     alert("Login Successful!");
 
-    let destination = sessionStorage.getItem("afterLogin");
+
+    let destination =
+        sessionStorage.getItem("afterLogin");
+
 
     if(destination === "claim"){
 
         sessionStorage.removeItem("afterLogin");
-        window.location.href = "claim.html";
+
+        window.location.href =
+            "claim.html";
 
     }else{
 
         sessionStorage.removeItem("afterLogin");
-        window.location.href = "report.html";
+
+        window.location.href =
+            "report.html";
 
     }
 

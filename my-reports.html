@@ -141,7 +141,7 @@ My Reports
 </h1>
 
 <p class="subtitle">
-Here are the reports submitted through this browser.
+Here are the reports you have submitted.
 </p>
 
 
@@ -151,29 +151,17 @@ Here are the reports submitted through this browser.
 
 <tr>
 
-<th>
-Item
-</th>
+<th>Item</th>
 
-<th>
-Type
-</th>
+<th>Type</th>
 
-<th>
-Category
-</th>
+<th>Category</th>
 
-<th>
-Location
-</th>
+<th>Location</th>
 
-<th>
-Date
-</th>
+<th>Date</th>
 
-<th>
-Status
-</th>
+<th>Status</th>
 
 </tr>
 
@@ -181,7 +169,6 @@ Status
 
 
 <tbody id="myTable">
-
 </tbody>
 
 </table>
@@ -192,7 +179,7 @@ Status
 <script>
 
 
-// GET ALL REPORTS
+// GET ALL SAVED REPORTS
 let reports =
     JSON.parse(
         localStorage.getItem("reports")
@@ -200,22 +187,18 @@ let reports =
 
 
 let table =
-    document.getElementById(
-        "myTable"
-    );
+    document.getElementById("myTable");
 
 
-// CHECK IF THERE ARE REPORTS
+// NO REPORTS
 if(reports.length === 0){
 
     table.innerHTML = `
 
         <tr>
 
-            <td
-                colspan="6"
-                class="no-report"
-            >
+            <td colspan="6"
+                class="no-report">
 
                 No reports submitted yet.
 
@@ -228,90 +211,74 @@ if(reports.length === 0){
 }
 
 
-// DISPLAY ALL REPORTS
+// SHOW REPORTS
 else{
 
-    reports.forEach(
-        function(report){
+    reports.forEach(function(report){
 
-            let status =
-                report.status ||
-                "Pending";
+        let status =
+            report.status || "Pending";
 
 
-            let color =
-                "pending";
+        let color =
+            "pending";
 
 
-            if(
-                status.toLowerCase() ===
-                "approved"
-            ){
+        if(status === "Approved"){
 
-                color =
-                    "approved";
-
-            }
-
-            else if(
-                status.toLowerCase() ===
-                "rejected"
-            ){
-
-                color =
-                    "rejected";
-
-            }
-
-            else if(
-                status.toLowerCase() ===
-                "claimed"
-            ){
-
-                color =
-                    "claimed";
-
-            }
-
-
-            table.innerHTML += `
-
-                <tr>
-
-                    <td>
-                        ${report.item || "-"}
-                    </td>
-
-                    <td>
-                        ${report.type || "-"}
-                    </td>
-
-                    <td>
-                        ${report.category || "-"}
-                    </td>
-
-                    <td>
-                        ${report.location || "-"}
-                    </td>
-
-                    <td>
-                        ${report.date || "-"}
-                    </td>
-
-                    <td
-                        class="${color}"
-                    >
-                        ${status}
-                    </td>
-
-                </tr>
-
-            `;
+            color = "approved";
 
         }
-    );
+
+        else if(status === "Rejected"){
+
+            color = "rejected";
+
+        }
+
+        else if(status === "Claimed"){
+
+            color = "claimed";
+
+        }
+
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${report.item || "-"}
+                </td>
+
+                <td>
+                    ${report.type || "-"}
+                </td>
+
+                <td>
+                    ${report.category || "-"}
+                </td>
+
+                <td>
+                    ${report.location || "-"}
+                </td>
+
+                <td>
+                    ${report.date || "-"}
+                </td>
+
+                <td class="${color}">
+                    ${status}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
 
 }
+
 
 </script>
 

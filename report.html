@@ -41,6 +41,10 @@ nav a{
     margin-left:20px;
 }
 
+nav a:hover{
+    text-decoration:underline;
+}
+
 section{
     padding:60px 8%;
 }
@@ -114,7 +118,9 @@ button:hover{
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -122,28 +128,44 @@ button:hover{
 BSHS LOST AND FOUND HUB
 </div>
 
+
 <nav>
 
-<a href="index.html">Home</a>
-<a href="items.html">Items</a>
-<a href="report.html">Report</a>
-<a href="my-reports.html">My Reports</a>
+<a href="index.html">
+Home
+</a>
+
+<a href="items.html">
+Items
+</a>
+
+<a href="report.html">
+Report
+</a>
 
 </nav>
 
 </header>
 
+
 <section>
+
 
 <div class="title">
 
-<h1>Report Lost or Found Item</h1>
+<h1>
+Report Lost or Found Item
+</h1>
 
-<p>Submit details about a lost or found item.</p>
+<p>
+Submit details about a lost or found item.
+</p>
 
 </div>
 
+
 <form id="reportForm">
+
 
 <div class="group">
 
@@ -169,6 +191,7 @@ Found Item
 
 </div>
 
+
 <div class="group">
 
 <label for="itemName">
@@ -182,6 +205,7 @@ placeholder="Example: Wallet, ID, Phone"
 required>
 
 </div>
+
 
 <div class="group">
 
@@ -219,6 +243,7 @@ Others
 
 </div>
 
+
 <div class="group">
 
 <label for="location">
@@ -233,6 +258,7 @@ required>
 
 </div>
 
+
 <div class="group">
 
 <label for="date">
@@ -245,6 +271,7 @@ id="date"
 required>
 
 </div>
+
 
 <div class="group">
 
@@ -259,19 +286,6 @@ required></textarea>
 
 </div>
 
-<div class="group">
-
-<label for="contact">
-Contact Information
-</label>
-
-<input
-type="text"
-id="contact"
-placeholder="Email or Student ID"
-required>
-
-</div>
 
 <div class="group">
 
@@ -286,42 +300,55 @@ accept="image/*">
 
 </div>
 
+
 <button type="submit">
 Submit Report
 </button>
+
 
 </form>
 
 </section>
 
+
 <script>
+
 
 const reportForm =
 document.getElementById("reportForm");
 
+
 const reportType =
 document.getElementById("reportType");
+
 
 const itemName =
 document.getElementById("itemName");
 
+
 const category =
 document.getElementById("category");
+
 
 const locationInput =
 document.getElementById("location");
 
+
 const dateInput =
 document.getElementById("date");
+
 
 const description =
 document.getElementById("description");
 
+
 const contact =
 document.getElementById("contact");
 
+
 const photo =
 document.getElementById("photo");
+
 
 
 reportForm.addEventListener(
@@ -329,6 +356,7 @@ reportForm.addEventListener(
     function(e){
 
         e.preventDefault();
+
 
         let file =
             photo.files[0];
@@ -352,7 +380,9 @@ reportForm.addEventListener(
 
             reader.readAsDataURL(file);
 
-        }else{
+        }
+
+        else{
 
             saveReport("");
 
@@ -362,25 +392,30 @@ reportForm.addEventListener(
 );
 
 
+
 function saveReport(image){
 
+    // Get existing reports
     let reports =
         JSON.parse(
             localStorage.getItem("reports")
         ) || [];
 
 
-    // Kunin ang Gmail kung naka-login.
-    // Hindi required ang login.
+    // Login is NOT required.
+    // If a student is logged in,
+    // save their Gmail.
     let studentGmail =
         localStorage.getItem(
             "studentGmail"
         ) || "";
 
 
+    // Create new report
     let newReport = {
 
-        student: studentGmail,
+        student:
+            studentGmail,
 
         type:
             reportType.value,
@@ -412,33 +447,44 @@ function saveReport(image){
     };
 
 
-    reports.push(newReport);
+    // Add report
+    reports.push(
+        newReport
+    );
 
 
     try{
 
+        // Save reports
         localStorage.setItem(
             "reports",
-            JSON.stringify(reports)
+            JSON.stringify(
+                reports
+            )
         );
 
 
+        // Success message
         alert(
             "Report Submitted Successfully!"
         );
 
 
+        // Clear form
         reportForm.reset();
 
 
-        // DIRECT TO MY REPORTS
+        // Go directly to My Reports
         window.location.href =
             "my-reports.html";
 
 
-    }catch(error){
+    }
+
+    catch(error){
 
         console.error(error);
+
 
         alert(
             "Hindi na-save. Masyadong malaki ang picture."
@@ -448,7 +494,9 @@ function saveReport(image){
 
 }
 
+
 </script>
+
 
 </body>
 

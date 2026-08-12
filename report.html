@@ -389,70 +389,47 @@ reportForm.addEventListener(
 );
 
 
-function saveReport(
-    image,
-    studentGmail
-){
+function saveReport(image, studentGmail){
 
     let reports =
         JSON.parse(
-            localStorage.getItem(
-                "reports"
-            )
+            localStorage.getItem("reports")
         ) || [];
 
 
-    // CREATE NEW REPORT
     let newReport = {
 
-        // IMPORTANT
-        // Ito ang Gmail ng student
-        // na gumawa ng report
         student: studentGmail,
 
-        type:
-            reportType.value,
+        type: reportType.value,
 
-        item:
-            itemName.value,
+        item: itemName.value,
 
-        category:
-            category.value,
+        category: category.value,
 
-        location:
-            locationInput.value,
+        location: locationInput.value,
 
-        date:
-            dateInput.value,
+        date: dateInput.value,
 
-        description:
-            description.value,
+        description: description.value,
 
-        contact:
-            contact.value,
+        contact: contact.value,
 
-        photo:
-            image,
+        photo: image,
 
-        status:
-            "Pending"
+        status: "Pending"
 
     };
 
 
-    // ADD REPORT
-    reports.push(
-        newReport
-    );
+    reports.push(newReport);
 
 
     try{
 
         localStorage.setItem(
             "reports",
-            JSON.stringify(
-                reports
-            )
+            JSON.stringify(reports)
         );
 
 
@@ -461,12 +438,9 @@ function saveReport(
         );
 
 
+        // RESET FORM LANG
         reportForm.reset();
 
-
-        // GO TO MY REPORTS
-      alert("Report Submitted Successfully!");
-reportForm.reset();
 
     }catch(error){
 
@@ -479,7 +453,6 @@ reportForm.reset();
     }
 
 }
-
 </script>
 
 </body>

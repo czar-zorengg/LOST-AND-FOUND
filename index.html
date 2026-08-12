@@ -1,4 +1,4 @@
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -420,17 +420,19 @@ let email = localStorage.getItem("studentGmail");
 
 if(email){
 
-document.getElementById("navMenu").innerHTML=`
+document.getElementById("navMenu").innerHTML = `
 
-<a href="index.html">Home</a>
+<a href="index.html">
+Home
+</a>
 
-<a href="items.html">Items</a>
+<a href="items.html">
+Items
+</a>
 
-<a href="#" onclick="goToReport()">Report</a>
-
-<a href="my-reports.html">My Reports</a>
-
-<a href="#" onclick="logout()">Logout</a>
+<a href="my-reports.html">
+My Reports
+</a>
 
 `;
 

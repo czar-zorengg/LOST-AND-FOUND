@@ -11,104 +11,103 @@
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f7fb;
+    background:#f4f7fb;
 }
 
 header{
-background:#1e3a8a;
-color:white;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
+    background:#1e3a8a;
+    color:white;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .logo{
-font-size:24px;
-font-weight:bold;
+    font-size:24px;
+    font-weight:bold;
 }
 
 nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
 }
 
 section{
-padding:60px 8%;
+    padding:60px 8%;
 }
 
 .title{
-text-align:center;
-margin-bottom:40px;
+    text-align:center;
+    margin-bottom:40px;
 }
 
 .title h1{
-color:#1e3a8a;
-font-size:35px;
-margin-bottom:10px;
+    color:#1e3a8a;
+    font-size:35px;
+    margin-bottom:10px;
 }
 
 .title p{
-color:#555;
+    color:#555;
 }
 
 form{
-max-width:750px;
-margin:auto;
-background:white;
-padding:30px;
-border-radius:14px;
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+    max-width:750px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .group{
-margin-bottom:18px;
+    margin-bottom:18px;
 }
 
 label{
-display:block;
-font-weight:bold;
-margin-bottom:8px;
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
 input,
 select,
 textarea{
-width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:15px;
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
 }
 
 textarea{
-height:120px;
-resize:none;
+    height:120px;
+    resize:none;
 }
 
 button{
-width:100%;
-padding:14px;
-background:#1e3a8a;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
+    width:100%;
+    padding:14px;
+    background:#1e3a8a;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#172554;
+    background:#172554;
 }
 
 </style>
@@ -128,6 +127,7 @@ BSHS LOST AND FOUND HUB
 <a href="index.html">Home</a>
 <a href="items.html">Items</a>
 <a href="report.html">Report</a>
+<a href="myreports.html">My Reports</a>
 
 </nav>
 
@@ -147,15 +147,23 @@ BSHS LOST AND FOUND HUB
 
 <div class="group">
 
-<label for="reportType">Report Type</label>
+<label for="reportType">
+Report Type
+</label>
 
 <select id="reportType" required>
 
-<option value="">Select Type</option>
+<option value="">
+Select Type
+</option>
 
-<option>Lost Item</option>
+<option value="Lost Item">
+Lost Item
+</option>
 
-<option>Found Item</option>
+<option value="Found Item">
+Found Item
+</option>
 
 </select>
 
@@ -163,7 +171,9 @@ BSHS LOST AND FOUND HUB
 
 <div class="group">
 
-<label for="itemName">Item Name</label>
+<label for="itemName">
+Item Name
+</label>
 
 <input
 type="text"
@@ -175,21 +185,35 @@ required>
 
 <div class="group">
 
-<label for="category">Category</label>
+<label for="category">
+Category
+</label>
 
 <select id="category" required>
 
-<option value="">Select Category</option>
+<option value="">
+Select Category
+</option>
 
-<option>Electronics</option>
+<option value="Electronics">
+Electronics
+</option>
 
-<option>School Supplies</option>
+<option value="School Supplies">
+School Supplies
+</option>
 
-<option>Documents and IDs</option>
+<option value="Documents and IDs">
+Documents and IDs
+</option>
 
-<option>Bags</option>
+<option value="Bags">
+Bags
+</option>
 
-<option>Others</option>
+<option value="Others">
+Others
+</option>
 
 </select>
 
@@ -197,7 +221,9 @@ required>
 
 <div class="group">
 
-<label for="location">Location</label>
+<label for="location">
+Location
+</label>
 
 <input
 type="text"
@@ -209,7 +235,9 @@ required>
 
 <div class="group">
 
-<label for="date">Date</label>
+<label for="date">
+Date
+</label>
 
 <input
 type="date"
@@ -220,7 +248,9 @@ required>
 
 <div class="group">
 
-<label for="description">Description</label>
+<label for="description">
+Description
+</label>
 
 <textarea
 id="description"
@@ -231,7 +261,9 @@ required></textarea>
 
 <div class="group">
 
-<label for="contact">Contact Information</label>
+<label for="contact">
+Contact Information
+</label>
 
 <input
 type="text"
@@ -243,7 +275,9 @@ required>
 
 <div class="group">
 
-<label for="photo">Upload Photo</label>
+<label for="photo">
+Upload Photo
+</label>
 
 <input
 type="file"
@@ -257,107 +291,198 @@ Submit Report
 </button>
 
 </form>
+
+</section>
+
 <script>
 
+const reportForm =
+document.getElementById("reportForm");
 
-const reportForm = document.getElementById("reportForm");
+const reportType =
+document.getElementById("reportType");
 
-const reportType = document.getElementById("reportType");
-const itemName = document.getElementById("itemName");
-const category = document.getElementById("category");
-const locationInput = document.getElementById("location");
-const dateInput = document.getElementById("date");
-const description = document.getElementById("description");
-const contact = document.getElementById("contact");
-const photo = document.getElementById("photo");
+const itemName =
+document.getElementById("itemName");
 
+const category =
+document.getElementById("category");
 
-reportForm.addEventListener("submit", function(e){
+const locationInput =
+document.getElementById("location");
 
-    e.preventDefault();
+const dateInput =
+document.getElementById("date");
 
+const description =
+document.getElementById("description");
 
-    let file = photo.files[0];
+const contact =
+document.getElementById("contact");
 
-
-    if(file){
-
-        let reader = new FileReader();
-
-
-        reader.onload = function(event){
-
-            saveReport(event.target.result);
-
-        };
+const photo =
+document.getElementById("photo");
 
 
-        reader.readAsDataURL(file);
+reportForm.addEventListener(
+    "submit",
+    function(e){
+
+        e.preventDefault();
 
 
-    }else{
+        // GET LOGGED-IN STUDENT
+        const studentGmail =
+            localStorage.getItem(
+                "studentGmail"
+            );
 
-        saveReport("");
+
+        // CHECK LOGIN
+        if(!studentGmail){
+
+            alert(
+                "Please login first before submitting a report."
+            );
+
+            window.location.href =
+                "student-login.html";
+
+            return;
+
+        }
+
+
+        let file =
+            photo.files[0];
+
+
+        if(file){
+
+            let reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event){
+
+                    saveReport(
+                        event.target.result,
+                        studentGmail
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }else{
+
+            saveReport(
+                "",
+                studentGmail
+            );
+
+        }
 
     }
+);
 
 
-});
-
-
-function saveReport(image){
-
+function saveReport(
+    image,
+    studentGmail
+){
 
     let reports =
-    JSON.parse(localStorage.getItem("reports")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "reports"
+            )
+        ) || [];
 
 
-  reports.push({
+    // CREATE NEW REPORT
+    let newReport = {
 
-    type: reportType.value,
+        // IMPORTANT
+        // Ito ang Gmail ng student
+        // na gumawa ng report
+        student: studentGmail,
 
-    item: itemName.value,
+        type:
+            reportType.value,
 
-    category: category.value,
+        item:
+            itemName.value,
 
-    location: locationInput.value,
+        category:
+            category.value,
 
-    date: dateInput.value,
+        location:
+            locationInput.value,
 
-    description: description.value,
+        date:
+            dateInput.value,
 
-    contact: contact.value,
+        description:
+            description.value,
 
-    photo: image,
+        contact:
+            contact.value,
 
-    status: "Pending"
+        photo:
+            image,
 
-});
+        status:
+            "Pending"
+
+    };
+
+
+    // ADD REPORT
+    reports.push(
+        newReport
+    );
 
 
     try{
 
         localStorage.setItem(
             "reports",
-            JSON.stringify(reports)
+            JSON.stringify(
+                reports
+            )
         );
 
 
-        alert("Report Submitted Successfully!");
+        alert(
+            "Report Submitted Successfully!"
+        );
 
 
         reportForm.reset();
 
 
+        // GO TO MY REPORTS
+        window.location.href =
+            "myreports.html";
+
+
     }catch(error){
 
-        alert("Hindi na-save. Masyadong malaki ang picture.");
+        console.error(error);
+
+        alert(
+            "Hindi na-save. Masyadong malaki ang picture."
+        );
 
     }
-
 
 }
 
 </script>
+
 </body>
+
 </html>

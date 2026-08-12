@@ -127,7 +127,7 @@ BSHS LOST AND FOUND HUB
 <a href="index.html">Home</a>
 <a href="items.html">Items</a>
 <a href="report.html">Report</a>
-<a href="myreports.html">My Reports</a>
+<a href="my-reports.html">My Reports</a>
 
 </nav>
 
@@ -330,29 +330,6 @@ reportForm.addEventListener(
 
         e.preventDefault();
 
-
-        // GET LOGGED-IN STUDENT
-        const studentGmail =
-            localStorage.getItem(
-                "studentGmail"
-            );
-
-
-        // CHECK LOGIN
-        if(!studentGmail){
-
-            alert(
-                "Please login first before submitting a report."
-            );
-
-            window.location.href =
-                "student-login.html";
-
-            return;
-
-        }
-
-
         let file =
             photo.files[0];
 
@@ -367,8 +344,7 @@ reportForm.addEventListener(
                 function(event){
 
                     saveReport(
-                        event.target.result,
-                        studentGmail
+                        event.target.result
                     );
 
                 };
@@ -378,10 +354,7 @@ reportForm.addEventListener(
 
         }else{
 
-            saveReport(
-                "",
-                studentGmail
-            );
+            saveReport("");
 
         }
 
@@ -389,7 +362,7 @@ reportForm.addEventListener(
 );
 
 
-function saveReport(image, studentGmail){
+function saveReport(image){
 
     let reports =
         JSON.parse(
@@ -397,27 +370,44 @@ function saveReport(image, studentGmail){
         ) || [];
 
 
+    // Kunin ang Gmail kung naka-login.
+    // Hindi required ang login.
+    let studentGmail =
+        localStorage.getItem(
+            "studentGmail"
+        ) || "";
+
+
     let newReport = {
 
         student: studentGmail,
 
-        type: reportType.value,
+        type:
+            reportType.value,
 
-        item: itemName.value,
+        item:
+            itemName.value,
 
-        category: category.value,
+        category:
+            category.value,
 
-        location: locationInput.value,
+        location:
+            locationInput.value,
 
-        date: dateInput.value,
+        date:
+            dateInput.value,
 
-        description: description.value,
+        description:
+            description.value,
 
-        contact: contact.value,
+        contact:
+            contact.value,
 
-        photo: image,
+        photo:
+            image,
 
-        status: "Pending"
+        status:
+            "Pending"
 
     };
 
@@ -433,13 +423,18 @@ function saveReport(image, studentGmail){
         );
 
 
-       alert(
-    "Report Submitted Successfully!"
-);
+        alert(
+            "Report Submitted Successfully!"
+        );
 
-reportForm.reset();
 
-window.location.href = "my-reports.html";
+        reportForm.reset();
+
+
+        // DIRECT TO MY REPORTS
+        window.location.href =
+            "my-reports.html";
+
 
     }catch(error){
 
@@ -452,6 +447,7 @@ window.location.href = "my-reports.html";
     }
 
 }
+
 </script>
 
 </body>

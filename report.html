@@ -139,10 +139,6 @@ Home
 Items
 </a>
 
-<a href="report.html">
-Report
-</a>
-
 </nav>
 
 </header>
@@ -289,6 +285,21 @@ required></textarea>
 
 <div class="group">
 
+<label for="contact">
+Contact Information
+</label>
+
+<input
+type="text"
+id="contact"
+placeholder="Email or Student ID"
+required>
+
+</div>
+
+
+<div class="group">
+
 <label for="photo">
 Upload Photo
 </label>
@@ -340,6 +351,10 @@ document.getElementById("date");
 
 const description =
 document.getElementById("description");
+
+
+const contact =
+document.getElementById("contact");
 
 
 const photo =
@@ -430,6 +445,9 @@ function saveReport(image){
 
         description:
             description.value,
+
+        contact:
+            contact.value,
 
         photo:
             image,

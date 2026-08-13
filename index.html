@@ -301,7 +301,9 @@
   
 <a href="report.html?page=claim" class="btn">Report Item</a>
 
-<a href="students-login.html?page=claim" class="btn">Claim Item</a>
+<a href="#" onclick="goToClaim()" class="btn">
+Claim Item
+</a>
   </section>
 
   <section id="features">
@@ -469,3 +471,32 @@ function goToReport(){
 </body>
 </html>
 ``  
+<script>
+
+function goToClaim(){
+
+    // Check kung may naka-login na student
+    let loggedIn =
+        localStorage.getItem("studentGmail");
+
+    if(loggedIn){
+
+        // May account/session na
+        window.location.href = "items.html";
+
+    }else{
+
+        // Wala pang login
+        localStorage.setItem(
+            "afterLogin",
+            "claim"
+        );
+
+        window.location.href =
+            "students-login.html";
+
+    }
+
+}
+
+</script>

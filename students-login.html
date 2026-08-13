@@ -186,10 +186,14 @@ function togglePassword(){
 function login(){
 
     let gmail =
-        document.getElementById("gmail").value.trim();
+        document.getElementById("gmail")
+        .value
+        .trim();
 
     let password =
-        document.getElementById("password").value.trim();
+        document.getElementById("password")
+        .value
+        .trim();
 
     let error =
         document.getElementById("error");
@@ -197,6 +201,10 @@ function login(){
 
     error.innerHTML = "";
 
+
+    /*
+       CHECK EMPTY FIELDS
+    */
 
     if(gmail === "" || password === ""){
 
@@ -208,7 +216,15 @@ function login(){
     }
 
 
-    if(!gmail.toLowerCase().endsWith("@gmail.com")){
+    /*
+       CHECK GMAIL
+    */
+
+    if(
+        !gmail
+        .toLowerCase()
+        .endsWith("@gmail.com")
+    ){
 
         error.innerHTML =
             "Please enter a valid Gmail address.";
@@ -218,54 +234,52 @@ function login(){
     }
 
 
-    // Save login
+    /*
+       SAVE LOGIN
+    */
+
     localStorage.setItem(
         "studentGmail",
         gmail
     );
 
 
-    // Check kung saan nanggaling
+    /*
+       GET LOGIN PURPOSE
+    */
+
     let destination =
-        localStorage.getItem("afterLogin");
+        localStorage.getItem(
+            "afterLogin"
+        );
 
 
-    // CLAIM ITEM
-    if(destination === "claim"){
+    /*
+       CLAIM REQUEST
+    */
+
+    if(destination === "claim-request"){
 
         localStorage.removeItem(
             "afterLogin"
         );
 
         window.location.href =
-            "items.html";
+            "claim.html";
 
         return;
 
     }
 
 
-    // REPORT
-    if(destination === "report"){
+    /*
+       NORMAL LOGIN
+    */
 
-        localStorage.removeItem(
-            "afterLogin"
-        );
-
-        window.location.href =
-            "report.html";
-
-        return;
-
-    }
-
-
-    // Default
     window.location.href =
         "index.html";
 
 }
-
 </script>
 
 </body>

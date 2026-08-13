@@ -475,18 +475,19 @@ function goToReport(){
 
 function goToClaim(){
 
-    // Check kung may naka-login na student
-    let loggedIn =
+    // Check kung naka-login na
+    const loggedIn =
         localStorage.getItem("studentGmail");
+
 
     if(loggedIn){
 
-        // May account/session na
+        // Naka-login na
         window.location.href = "items.html";
 
     }else{
 
-        // Wala pang login
+        // Hindi pa naka-login
         localStorage.setItem(
             "afterLogin",
             "claim"

@@ -1,79 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Claim Item | BSHS Lost and Found Hub</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Claim Request | BSHS Lost and Found Hub</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f7fb;
+    background:#f4f7fb;
 }
 
 header{
-background:#1e3a8a;
-color:white;
-padding:20px;
-text-align:center;
+    background:#1e3a8a;
+    color:white;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+section{
+    padding:60px 8%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.title h1{
+    color:#1e3a8a;
+    margin-bottom:10px;
+}
+
+.title p{
+    color:#555;
 }
 
 form{
-max-width:700px;
-margin:40px auto;
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .group{
-margin-bottom:18px;
+    margin-bottom:18px;
 }
 
 label{
-display:block;
-margin-bottom:8px;
-font-weight:bold;
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
 input,
 textarea{
-width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:15px;
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
 }
 
 textarea{
-height:120px;
-resize:vertical;
+    min-height:120px;
+    resize:vertical;
 }
 
 button{
-width:100%;
-padding:14px;
-background:#1e3a8a;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-transition:.3s;
+    width:100%;
+    padding:14px;
+    background:#1e3a8a;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#172554;
+    background:#172554;
+}
+
+.item-box{
+    background:#eef2ff;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
 }
 
 </style>
@@ -82,173 +123,234 @@ background:#172554;
 
 <body>
 
+
 <header>
 
-<h1>Claim Item</h1>
+<div class="logo">
+BSHS LOST AND FOUND HUB
+</div>
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="items.html">
+Items
+</a>
+
+<a href="my-claim-requests.html">
+My Claim Requests
+</a>
+
+</nav>
 
 </header>
 
+
+<section>
+
+
+<div class="title">
+
+<h1>
+Claim Request Form
+</h1>
+
+<p>
+Please provide information to verify your ownership.
+</p>
+
+</div>
+
+
 <form id="claimForm">
 
-<div class="group">
 
-<label for="studentEmail">Student Gmail</label>
+<div class="item-box">
 
-<input
-type="email"
-id="studentEmail"
-placeholder="Enter your Gmail"
-required>
+<strong>
+Selected Item:
+</strong>
 
-</div>
-
-<div class="group">
-
-<label for="itemName">Item Name</label>
-
-<input
-type="text"
-id="itemName"
-placeholder="Item Name"
-readonly>
+<span id="selectedItem">
+Loading...
+</span>
 
 </div>
 
+
 <div class="group">
 
-<label for="description">Description of the Item</label>
+<label for="proof">
+Proof of Ownership
+</label>
 
 <textarea
-id="description"
-placeholder="Describe the item in detail. Include its color, brand, size, unique markings, or any information that can help verify ownership."
-required></textarea>
+    id="proof"
+    placeholder="Describe details that can prove that this item belongs to you."
+    required
+></textarea>
 
 </div>
+
 
 <div class="group">
 
-<label for="proof">Proof of Ownership (Optional)</label>
+<label for="details">
+Additional Information
+</label>
 
-<input
-type="file"
-id="proof"
-accept="image/*">
+<textarea
+    id="details"
+    placeholder="Provide any additional information."
+></textarea>
 
 </div>
 
+
 <button type="submit">
-
-Submit Claim
-
+Submit Claim Request
 </button>
 
+
 </form>
+
+</section>
+
+
 <script>
 
-const claimForm = document.getElementById("claimForm");
-const studentEmail = document.getElementById("studentEmail");
-const itemName = document.getElementById("itemName");
-const description = document.getElementById("description");
-const proof = document.getElementById("proof");
 
-// Load student email
-studentEmail.value = localStorage.getItem("studentGmail") || "";
+/*
+   CHECK LOGIN
+*/
 
-// Load selected item
-let reports = JSON.parse(localStorage.getItem("reports")) || [];
-let claimIndex = localStorage.getItem("claimIndex");
+let gmail =
+    localStorage.getItem(
+        "studentGmail"
+    );
 
-if(claimIndex !== null && reports[claimIndex]){
-    itemName.value = reports[claimIndex].item;
+
+if(!gmail){
+
+    /*
+       Not logged in.
+       Go back to login.
+    */
+
+    localStorage.setItem(
+        "afterLogin",
+        "claim-request"
+    );
+
+    window.location.href =
+        "students-login.html";
+
 }
 
-claimForm.addEventListener("submit", function(e){
 
-    e.preventDefault();
+/*
+   GET SELECTED ITEM
+*/
 
-    let claims = JSON.parse(localStorage.getItem("claims")) || [];
+let selectedItem =
+    localStorage.getItem(
+        "claimItem"
+    );
 
-    function saveClaim(image){
 
-        let claim = {
+document.getElementById(
+    "selectedItem"
+).textContent =
+    selectedItem || "No item selected";
 
-            gmail: studentEmail.value,
-            item: itemName.value,
-            description: description.value,
-            proof: image,
-            status: "Pending"
+
+/*
+   SUBMIT CLAIM
+*/
+
+document
+.getElementById("claimForm")
+.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        let proof =
+            document
+            .getElementById("proof")
+            .value
+            .trim();
+
+
+        let details =
+            document
+            .getElementById("details")
+            .value
+            .trim();
+
+
+        let requests =
+            JSON.parse(
+                localStorage.getItem(
+                    "claimRequests"
+                )
+            ) || [];
+
+
+        let request = {
+
+            id:
+                "CLAIM-" +
+                Date.now(),
+
+            student:
+                gmail,
+
+            item:
+                selectedItem,
+
+            proof:
+                proof,
+
+            details:
+                details,
+
+            status:
+                "Pending",
+
+            date:
+                new Date()
+                .toLocaleDateString()
 
         };
 
-        claims.push(claim);
 
-        try{
+        requests.push(request);
 
-            localStorage.setItem("claims", JSON.stringify(claims));
 
-            alert("Claim Submitted Successfully!");
+        localStorage.setItem(
+            "claimRequests",
+            JSON.stringify(requests)
+        );
 
-            localStorage.removeItem("claimIndex");
 
-            window.location.href="items.html";
+        /*
+           Go to My Claim Requests
+        */
 
-        }catch(err){
-
-            alert("Storage is full.\n\nPlease use a smaller image.");
-
-        }
-
-    }
-
-    let file = proof.files[0];
-
-    if(file){
-
-        let reader = new FileReader();
-
-        reader.onload = function(e){
-
-            let img = new Image();
-
-            img.onload = function(){
-
-                let canvas = document.createElement("canvas");
-
-                let ctx = canvas.getContext("2d");
-
-                let maxWidth = 500;
-
-                let scale = maxWidth / img.width;
-
-                if(scale > 1){
-                    scale = 1;
-                }
-
-                canvas.width = img.width * scale;
-                canvas.height = img.height * scale;
-
-                ctx.drawImage(img,0,0,canvas.width,canvas.height);
-
-                let compressed = canvas.toDataURL("image/jpeg",0.5);
-
-                saveClaim(compressed);
-
-            };
-
-            img.src = e.target.result;
-
-        };
-
-        reader.readAsDataURL(file);
-
-    }else{
-
-        saveClaim("");
+        window.location.href =
+            "my-claim-requests.html";
 
     }
-
-});
+);
 
 </script>
+
 </body>
+
 </html>

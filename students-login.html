@@ -191,10 +191,16 @@ function login(){
     let password =
         document.getElementById("password").value.trim();
 
+    let error =
+        document.getElementById("error");
+
+
+    error.innerHTML = "";
+
 
     if(gmail === "" || password === ""){
 
-        document.getElementById("error").innerHTML =
+        error.innerHTML =
             "Please fill up all fields.";
 
         return;
@@ -202,17 +208,24 @@ function login(){
     }
 
 
-    // Save student login
+    if(!gmail.toLowerCase().endsWith("@gmail.com")){
+
+        error.innerHTML =
+            "Please enter a valid Gmail address.";
+
+        return;
+
+    }
+
+
+    // Save login
     localStorage.setItem(
         "studentGmail",
         gmail
     );
 
 
-    alert("Login Successful!");
-
-
-    // Check kung saan dapat pumunta
+    // Check kung saan nanggaling
     let destination =
         localStorage.getItem("afterLogin");
 
@@ -232,7 +245,7 @@ function login(){
     }
 
 
-    // REPORT ITEM
+    // REPORT
     if(destination === "report"){
 
         localStorage.removeItem(
@@ -250,38 +263,6 @@ function login(){
     // Default
     window.location.href =
         "index.html";
-
-}
-
-    // SAVE STUDENT GMAIL
-    localStorage.setItem(
-        "studentGmail",
-        gmail
-    );
-
-
-    alert("Login Successful!");
-
-
-    let destination =
-        sessionStorage.getItem("afterLogin");
-
-
-    if(destination === "claim"){
-
-        sessionStorage.removeItem("afterLogin");
-
-        window.location.href =
-            "claim.html";
-
-    }else{
-
-        sessionStorage.removeItem("afterLogin");
-
-        window.location.href =
-            "report.html";
-
-    }
 
 }
 

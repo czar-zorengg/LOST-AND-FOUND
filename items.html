@@ -327,7 +327,58 @@ Claim Item
 
 });
 </script>
+<script>
 
+function claimItem(itemID){
+
+    /*
+       Save the selected item
+    */
+
+    localStorage.setItem(
+        "claimItem",
+        itemID
+    );
+
+
+    /*
+       Check if student is already logged in
+    */
+
+    let loggedIn =
+        localStorage.getItem("studentGmail");
+
+
+    if(loggedIn){
+
+        /*
+           Already logged in
+           → Claim Request Form
+        */
+
+        window.location.href =
+            "claim.html";
+
+    }else{
+
+        /*
+           Not logged in
+           → Login first
+        */
+
+        localStorage.setItem(
+            "afterLogin",
+            "claim-request"
+        );
+
+        window.location.href =
+            "students-login.html";
+
+    }
+
+}
+
+</script>
 </body>
 
 </html>
